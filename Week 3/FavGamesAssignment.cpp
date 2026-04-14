@@ -17,6 +17,7 @@
 #include <algorithm>        // for find(), sort(), random_shuffle()
 
 using namespace std;
+vector<string>::iterator iter;
 
 int main(){
 
@@ -41,11 +42,47 @@ int main(){
         }
 
         else if (input == "Edit") {
+            cout << "Here are your favorite games:\n";
+
+            for(int i = 0; i < favGames.size(); i++ ) {
+                cout << "    " << favGames[i] << "\n";
+            }
             
+            cout << "What is the name of the game that you would like to edit?\n";
+
+            getline(cin,input);
+            iter = find(favGames.begin(), favGames.end(), input); //Asks the player what game to edit, then finds and stores the index of that game.
+            if (iter != favGames.end()) {
+                cout << "We have found that game! it is at index: " << *iter <<"!\n" << "What would you like to change it to?\n";
+                getline(cin,input);
+                *iter = input;
+                cout << "The game has been edited.\n";
+            }
+            else {
+                cout << "We do not see that game in your favorites.\n";
+            }
+
         }
 
         else if (input == "Remove") {
+            sort(favGames.begin(), favGames.end());
+            
+            cout << "Here are your favorite games:\n";
+            for(int i = 0; i < favGames.size(); i++ ) {
+                cout << "    " << favGames[i] << "\n";
+            }
+            cout << "What game would you like to remove from the list?\n";
+            getline(cin,input);
 
+            auto iter = find(favGames.begin(), favGames.end(), input);
+
+                if(iter != favGames.end()) {
+                    cout << "We've found that name. removing now.\n";
+                    favGames.erase(iter);
+                }
+                else {
+                    cout << "We do not see that game in your favorites./n";
+                }
         }
 
         else if (input == "Show") {
